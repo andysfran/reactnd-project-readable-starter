@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,7 +28,7 @@ const AppMenu = (props) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          Readable
+          <Link to="/" style={{ color: 'white', textDecoration: 'none', textTransform: 'uppercase' }}>Readable</Link>
         </Typography>
         <Button color="inherit">New Post</Button>
       </Toolbar>

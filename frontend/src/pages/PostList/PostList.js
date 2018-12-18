@@ -22,7 +22,10 @@ class PostList extends PureComponent {
     if (!isRequesting) {
       return posts.map((post) => (
         <Grid key={post.id} item xs={12} md={4} lg={4} xl={4}>
-          <Post {...post} />
+          <Post
+            onClickPost={(id) => this.props.history.push(`/post/${id}`)}
+            {...post}
+          />
         </Grid>
       ));
     }

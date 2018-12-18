@@ -13,23 +13,40 @@ import Grid from '@material-ui/core/Grid';
 class Post extends PureComponent {
 
   static defaultProps = {
+    id: undefined,
     title: '',
     author: '',
+    body: '',
     commentCount: 0,
     voteScore: 0,
-    onClickPost: () => console.log('Post'),
-    onClickComment: () => console.log('Comment'),
-    onClickVote: () => console.log('Vote')
+    onClickPost: () => {},
+    onClickComment: () => {},
+    onClickVote: () => {}
+  }
+
+  clickPost = (e) => {
+    const tagName = e.target.tagName;
+    if (tagName !== "BUTTON" && tagName !== "path" && tagName !== "svg") {
+      this.props.onClickPost(this.props.id);
+    }
   }
 
   render() {
-    const { classes, title, author, commentCount, voteScore } = this.props;
+    const { classes, title, author, commentCount, voteScore, showBody, body } = this.props;
     return (
-      <Paper onClick={this.props.onClickPost} className={classes.paper}>
+      <Paper onClick={this.clickPost} className={classes.paper}>
         <Typography className={classes.textWrapper} variant="h5" component="h5" paragraph={true}>
           { title }
           <Typography className={classes.subtitle} variant="caption" component="p">{ author }</Typography>
         </Typography>
+        
+        <Grid item>
+          { showBody && 
+            <Typography className={classes.bodyText} variant="body2" color="textPrimary">
+              { body }
+            </Typography>
+          }
+        </Grid>
 
         <Grid container spacing={24}>
           <Grid item>
@@ -59,6 +76,7 @@ const styles = theme => ({
     margin: 8,
     padding: 5,
     color: theme.palette.text.secondary,
+    cursor: 'pointer'
   },
   textWrapper: {
     paddingLeft: 10,
@@ -66,9 +84,11 @@ const styles = theme => ({
   },
   subtitle: {
     color: '#BDBDBD',
+    pointerEvents: `none`
   },
-  button: {
-    margin: theme.spacing.unit,
+  bodyText: {
+    paddingRight: 20,
+    paddingLeft: 20
   }
 });
 
