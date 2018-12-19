@@ -18,12 +18,17 @@ import Divider from '@material-ui/core/Divider';
 
 class Comment extends PureComponent {
 
+  static defaultProps = {
+    onVote: () => {},
+    onDelete: () => {}
+  }
+
   state = {
     editMode: false
   }
 
   render() {
-    const { classes, author, body, voteScore } = this.props;
+    const { classes, author, body, voteScore, id } = this.props;
     return (
       <ExpansionPanel defaultExpanded>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -39,16 +44,16 @@ class Comment extends PureComponent {
         <Divider key={1}/>
         <ExpansionPanelActions key={2}>
           <Grid className={classes.gridIcons}>
-            <IconButton>
+            <IconButton onClick={() => this.props.onVote(id, "downVote")}>
               <SvgIcon fontSize="small"><ThumbDown /></SvgIcon>
             </IconButton>
             { voteScore }
-            <IconButton>
+            <IconButton onClick={() => this.props.onVote(id, "upVote")}>
               <SvgIcon fontSize="small"><ThumbUp /></SvgIcon>
             </IconButton>
           </Grid>
           <Button size="small">Edit comment</Button>
-          <Button size="small" color="secondary">
+          <Button size="small" color="secondary" onClick={() => this.props.onDelete(id)}>
             Delete comment
           </Button>
         </ExpansionPanelActions>
