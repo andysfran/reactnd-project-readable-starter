@@ -10,7 +10,6 @@ export const getSinglePost = (postID) => {
     try {
       const payload = await axios.get(`http://localhost:3001/posts/${postID}`);
       if (payload.status === 200) {
-        console.log(payload.data);
         dispatch(actionCreator(types.GET_POST_SUCCESS, payload.data));
       } else {
         dispatch(actionCreator(types.GET_POST_FAILED));

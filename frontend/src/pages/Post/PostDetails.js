@@ -9,6 +9,7 @@ import { withStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import DefaultContainer from '../../components/shared/DefaultContainer';
 import Post from '../../components/Post/Post';
+import CommentList from '../../components/Post/CommentList';
 
 class PostDetails extends PureComponent {
 
@@ -33,6 +34,7 @@ class PostDetails extends PureComponent {
   renderContent = () => {
     const { requesting, data } = this.props;
     if (!requesting) {
+      const { match } = this.props;
       return (
         <Fragment>
           <Grid item xs={12} md={12} lg={12} xl={12}>
@@ -41,6 +43,7 @@ class PostDetails extends PureComponent {
           <Grid item xs={12} md={12} lg={12} xl={12}>
             <Typography variant="title" align="center">Comments</Typography>
           </Grid>
+          <CommentList post={match.params.id} />
         </Fragment>
       );
     }

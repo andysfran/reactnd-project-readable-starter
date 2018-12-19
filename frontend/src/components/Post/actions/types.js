@@ -1,0 +1,4 @@
+
+export const GET_COMMENTS_REQUEST = 'commentList/GET_COMMENTS_REQUEST';
+export const GET_COMMENTS_SUCCESS = 'commentList/GET_COMMENTS_SUCCESS';
+export const GET_COMMENTS_FAILED = 'commentList/GET_COMMENTS_FAILED';
