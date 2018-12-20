@@ -1,5 +1,5 @@
 import * as types from './types';
-import { actionCreator } from '../../../utils/reduxUtils';
+import { actionCreator, generateGuid } from '../../../utils/reduxUtils';
 import axios from '../../../services/AxiosInstance';
 import { getSinglePost } from '../../../pages/Post/actions';
 import swal from 'sweetalert2';
@@ -27,8 +27,8 @@ export const sendComment = (postID, author, text) => {
     dispatch(actionCreator(types.SEND_COMMENT_REQUEST));
     try {
       const data = {
-        id: Math.floor(Math.random() * (100000 - 1)) + 1,
-        timestamp: new Date().getTime(),
+        id: generateGuid(),
+        timestamp: Date.now(),
         body: text,
         author,
         parentId: postID

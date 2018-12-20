@@ -17,6 +17,11 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
+    textTransform: 'uppercase'
+  }
 };
 
 const AppMenu = (props) => {
@@ -24,13 +29,15 @@ const AppMenu = (props) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={props.onClickMenu}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          <Link to="/" style={{ color: 'white', textDecoration: 'none', textTransform: 'uppercase' }}>Readable</Link>
+          <Link to="/" className={classes.link}>Readable</Link>
         </Typography>
-        <Button color="inherit">New Post</Button>
+        <Button color="inherit">
+          <Link to="/post/new" className={classes.link}>New Post</Link>
+        </Button>
       </Toolbar>
     </AppBar>
   );

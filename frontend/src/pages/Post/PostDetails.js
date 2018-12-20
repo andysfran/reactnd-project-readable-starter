@@ -24,8 +24,8 @@ class PostDetails extends PureComponent {
 
   componentDidMount() {
     const { match } = this.props;
-    if ("id" in match.params && match.params.id !== undefined && match.params.id.trim() !== "") {
-      this.props.getSinglePost(match.params.id);
+    if ("post_id" in match.params && match.params.post_id !== undefined && match.params.post_id.trim() !== "") {
+      this.props.getSinglePost(match.params.post_id);
     } else {
       this.props.history.replace('/');
     }
@@ -43,7 +43,7 @@ class PostDetails extends PureComponent {
           <Grid item xs={12} md={12} lg={12} xl={12}>
             <Typography variant="title" align="center">Comments</Typography>
           </Grid>
-          <CommentList post={match.params.id} />
+          <CommentList post={match.params.post_id} />
         </Fragment>
       );
     }
