@@ -9,7 +9,7 @@ import { withStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import DefaultContainer from '../../components/shared/DefaultContainer';
 import Post from '../../components/Post/Post';
-import CommentList from '../../components/Post/CommentList';
+import CommentList from '../../components/Comments/CommentList';
 
 class PostDetails extends PureComponent {
 

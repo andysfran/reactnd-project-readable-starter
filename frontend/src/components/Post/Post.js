@@ -9,6 +9,7 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import Comment from '@material-ui/icons/Comment';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class Post extends PureComponent {
 
@@ -50,20 +51,26 @@ class Post extends PureComponent {
 
         <Grid container spacing={24}>
           <Grid item>
-            <IconButton onClick={this.props.onClickComment}>
-              <SvgIcon fontSize="small"><Comment /></SvgIcon>
-            </IconButton>
+            <Tooltip title="Comments" aria-label="Comments">
+              <IconButton onClick={this.props.onClickComment}>
+                <SvgIcon fontSize="small"><Comment /></SvgIcon>
+              </IconButton>
+            </Tooltip>
             { commentCount > 0? commentCount : null}
           </Grid>
 
           <Grid item>
-            <IconButton onClick={this.props.onClickVote}>
-              <SvgIcon fontSize="small"><ThumbDown /></SvgIcon>
-            </IconButton>
+            <Tooltip title="Dislike post" aria-label="dislike-post">
+              <IconButton onClick={this.props.onClickVote}>
+                <SvgIcon fontSize="small"><ThumbDown /></SvgIcon>
+              </IconButton>
+            </Tooltip>
             { voteScore }
-            <IconButton onClick={this.props.onClickVote}>
-              <SvgIcon fontSize="small"><ThumbUp /></SvgIcon>
-            </IconButton>
+            <Tooltip title="Like post" aria-label="like-post">
+              <IconButton onClick={this.props.onClickVote}>
+                <SvgIcon fontSize="small"><ThumbUp /></SvgIcon>
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
       </Paper>
@@ -75,8 +82,7 @@ const styles = theme => ({
   paper: {
     margin: 8,
     padding: 5,
-    color: theme.palette.text.secondary,
-    cursor: 'pointer'
+    color: theme.palette.text.secondary
   },
   textWrapper: {
     paddingLeft: 10,
