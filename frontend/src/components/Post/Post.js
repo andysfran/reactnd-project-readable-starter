@@ -61,13 +61,13 @@ class Post extends PureComponent {
 
           <Grid item>
             <Tooltip title="Dislike post" aria-label="dislike-post">
-              <IconButton onClick={this.props.onClickVote}>
+              <IconButton onClick={() => this.props.onClickVote("downVote")}>
                 <SvgIcon fontSize="small"><ThumbDown /></SvgIcon>
               </IconButton>
             </Tooltip>
             { voteScore }
             <Tooltip title="Like post" aria-label="like-post">
-              <IconButton onClick={this.props.onClickVote}>
+              <IconButton onClick={() => this.props.onClickVote("upVote")}>
                 <SvgIcon fontSize="small"><ThumbUp /></SvgIcon>
               </IconButton>
             </Tooltip>

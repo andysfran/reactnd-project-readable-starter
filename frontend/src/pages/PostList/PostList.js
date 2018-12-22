@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getPosts } from './actions';
+import { getPosts, postVote } from './actions';
 import { getData, isRequesting } from './selector';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -46,6 +46,7 @@ class PostList extends PureComponent {
         <Grid key={post.id} item xs={12} md={4} lg={4} xl={4}>
           <Post
             onClickComment={() => this.props.history.push(`/${post.category}/${post.id}`)}
+            onClickVote={(option) => this.props.postVote(post.id, option)}
             {...post}
           />
         </Grid>
@@ -80,7 +81,7 @@ const mapStateToProps = (state) => ({
   isRequesting: isRequesting(state)
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getPosts }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getPosts, postVote }, dispatch);
 
 const PostListStyled = withStyles(styles)(PostList);
 

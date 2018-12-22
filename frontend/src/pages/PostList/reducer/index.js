@@ -8,7 +8,8 @@ import {
 const initialState = {
   isRequesting: false,
   data: [],
-  error: undefined
+  error: undefined,
+  categorySelected: ''
 };
 
 export default (state = initialState, { type, payload }) => {

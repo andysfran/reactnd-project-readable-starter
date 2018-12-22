@@ -9,7 +9,8 @@ export const onGetPostsSuccess = (state, payload) => ({
   ...state,
   isRequesting: false,
   error: false,
-  data: payload
+  data: payload.data,
+  categorySelected: payload.category
 });
 
 export const onGetPostsFailed = (state) => ({

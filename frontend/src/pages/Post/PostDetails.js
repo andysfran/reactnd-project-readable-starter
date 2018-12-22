@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getSinglePost, resetPost } from './actions';
+import { getSinglePost, resetPost, postVote } from './actions';
 import { getData, isRequesting } from './selector';
 
 import { withStyles, Typography } from '@material-ui/core';
@@ -32,13 +32,17 @@ class PostDetails extends PureComponent {
   }
 
   renderContent = () => {
-    const { requesting, data } = this.props;
+    const { requesting, data, postVote, match } = this.props;
     if (!requesting) {
       const { match } = this.props;
       return (
         <Fragment>
           <Grid item xs={12} md={12} lg={12} xl={12}>
-            <Post showBody {...data} />
+            <Post
+              onClickVote={(option) => postVote(match.params.post_id, option)}
+              showBody
+              {...data}
+            />
           </Grid>
           <Grid item xs={12} md={12} lg={12} xl={12}>
             <Typography variant="title" align="center">Comments</Typography>
@@ -65,7 +69,8 @@ class PostDetails extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getSinglePost,
-  resetPost
+  resetPost,
+  postVote
 }, dispatch);
 
 const mapStateToProps = (state) => ({

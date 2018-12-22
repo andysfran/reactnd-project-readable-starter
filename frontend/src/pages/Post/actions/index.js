@@ -1,3 +1,4 @@
+import swal from 'sweetalert2';
 import * as types from './types';
 import { actionCreator } from '../../../utils/reduxUtils';
 import axios from '../../../services/AxiosInstance';
@@ -16,6 +17,21 @@ export const getSinglePost = (postID) => {
       }
     } catch (error) {
       dispatch(actionCreator(types.GET_POST_FAILED));
+    }
+  }
+}
+
+export const postVote = (postID, option) => {
+  return async (dispatch) => {
+    try {
+      const payload = await axios.post(`http://localhost:3001/posts/${postID}`, { option });
+      if (payload.status === 200) {
+        dispatch(getSinglePost(postID));
+      } else {
+        swal("Ops!", "Error to vote! Try again.", "error");
+      }
+    } catch (error) {
+      swal("Ops!", "Error to vote!\nTry again later...", "error");
     }
   }
 }
