@@ -38,7 +38,7 @@ class Post extends PureComponent {
       <Paper onClick={this.clickPost} className={classes.paper}>
         <Typography className={classes.textWrapper} variant="h5" component="h5" paragraph={true}>
           { title }
-          <Typography className={classes.subtitle} variant="caption" component="p">{ author }</Typography>
+          <Typography className={classes.subtitle} variant="caption" component="p">Posted by: { author }</Typography>
         </Typography>
         
         <Grid item>
