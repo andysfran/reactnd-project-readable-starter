@@ -7,6 +7,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import IconButton from '@material-ui/core/IconButton';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
+import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import Comment from '@material-ui/icons/Comment';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -20,9 +22,12 @@ class Post extends PureComponent {
     body: '',
     commentCount: 0,
     voteScore: 0,
+    showCommentsButton: true,
+    showEditButton: false,
     onClickPost: () => {},
     onClickComment: () => {},
-    onClickVote: () => {}
+    onClickVote: () => {},
+    onClickEdit: () => {}
   }
 
   clickPost = (e) => {
@@ -33,12 +38,14 @@ class Post extends PureComponent {
   }
 
   render() {
-    const { classes, title, author, commentCount, voteScore, showBody, body } = this.props;
+    const { classes, title, author, commentCount, voteScore, showBody, body, showCommentsButton, showEditButton } = this.props;
     return (
       <Paper onClick={this.clickPost} className={classes.paper}>
-        <Typography className={classes.textWrapper} variant="h5" component="h5" paragraph={true}>
+        <Typography className={classes.textWrapper} variant="h5" component="h5">
           { title }
-          <Typography className={classes.subtitle} variant="caption" component="p">Posted by: { author }</Typography>
+        </Typography>
+        <Typography className={classes.subtitle} variant="caption" component="p" paragraph={true}>
+          Posted by: { author }
         </Typography>
         
         <Grid item>
@@ -50,14 +57,26 @@ class Post extends PureComponent {
         </Grid>
 
         <Grid container spacing={24}>
-          <Grid item>
-            <Tooltip title="Comments" aria-label="Comments">
-              <IconButton onClick={this.props.onClickComment}>
-                <SvgIcon fontSize="small"><Comment /></SvgIcon>
-              </IconButton>
-            </Tooltip>
-            { commentCount > 0? commentCount : null}
-          </Grid>
+          {showCommentsButton && 
+            <Grid item>
+              <Tooltip title="Comments" aria-label="Comments">
+                <IconButton onClick={this.props.onClickComment}>
+                  <SvgIcon fontSize="small"><Comment /></SvgIcon>
+                </IconButton>
+              </Tooltip>
+              { commentCount > 0? commentCount : null}
+            </Grid>
+          }
+
+          {showEditButton &&
+            <Grid item>
+              <Tooltip title="Edit post" aria-label="edit-post">
+                <IconButton onClick={this.props.onClickEdit}>
+                  <SvgIcon fontSize="small"><Edit /></SvgIcon>
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          }
 
           <Grid item>
             <Tooltip title="Dislike post" aria-label="dislike-post">
@@ -90,7 +109,9 @@ const styles = theme => ({
   },
   subtitle: {
     color: '#BDBDBD',
-    pointerEvents: `none`
+    pointerEvents: `none`,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   bodyText: {
     paddingRight: 20,

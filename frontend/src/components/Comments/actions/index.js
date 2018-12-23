@@ -3,6 +3,7 @@ import { actionCreator, generateGuid } from '../../../utils/reduxUtils';
 import axios from '../../../services/AxiosInstance';
 import { getSinglePost } from '../../../pages/Post/actions';
 import swal from 'sweetalert2';
+import { closeModal } from '../../EditCommentModal/actions';
 
 //Get all comments
 export const getComments = (postID) => {
@@ -77,6 +78,25 @@ export const deleteComment = (postID, commentID) => {
       }
     } catch (error) {
       swal("Ops!", "Something got wrong, try again later...", "error");
+    }
+  }
+}
+
+export const editComment = (commentID, postID, body) => {
+  return async (dispatch) => {
+    try {
+      const data = {
+        timestamp: Date.now(),
+        body
+      }
+      const payload = await axios.put(`http://localhost:3001/comments/${commentID}`, data);
+      if (payload.status === 200) {
+        swal("Success!", "Done! :)", "success");
+        dispatch(getComments(postID));
+        dispatch(closeModal());
+      }
+    } catch (error) {
+      swal("Ops!", error, "error");
     }
   }
 }

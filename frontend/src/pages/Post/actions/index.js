@@ -2,6 +2,7 @@ import swal from 'sweetalert2';
 import * as types from './types';
 import { actionCreator } from '../../../utils/reduxUtils';
 import axios from '../../../services/AxiosInstance';
+import { closeModal } from '../../../components/EditModal/actions';
 
 export const resetPost = () => actionCreator(types.RESET_POST);
 
@@ -32,6 +33,21 @@ export const postVote = (postID, option) => {
       }
     } catch (error) {
       swal("Ops!", "Error to vote!\nTry again later...", "error");
+    }
+  }
+}
+
+export const editPost = (postID, title, body) => {
+  return async (dispatch) => {
+    try {
+      const payload = await axios.put(`http://localhost:3001/posts/${postID}`, { title, body });
+      if (payload.status === 200) {
+        swal("Success!", "Done! :)", "success");
+        dispatch(getSinglePost(postID));
+        dispatch(closeModal());
+      }
+    } catch (error) {
+      swal("Ops!", error, "error");
     }
   }
 }

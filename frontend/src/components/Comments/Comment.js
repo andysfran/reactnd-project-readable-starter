@@ -20,7 +20,8 @@ class Comment extends PureComponent {
 
   static defaultProps = {
     onVote: () => {},
-    onDelete: () => {}
+    onDelete: () => {},
+    onEdit: () => {}
   }
 
   state = {
@@ -52,7 +53,7 @@ class Comment extends PureComponent {
               <SvgIcon fontSize="small"><ThumbUp /></SvgIcon>
             </IconButton>
           </Grid>
-          <Button size="small">Edit comment</Button>
+          <Button size="small" onClick={() => this.props.onEdit()}>Edit comment</Button>
           <Button size="small" color="secondary" onClick={() => this.props.onDelete(id)}>
             Delete comment
           </Button>
