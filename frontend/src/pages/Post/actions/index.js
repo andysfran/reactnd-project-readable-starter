@@ -51,3 +51,19 @@ export const editPost = (postID, title, body) => {
     }
   }
 }
+
+export const deletePost = (postID) => {
+  return async (dispatch) => {
+    try {
+      const payload = await axios.delete(`http://localhost:3001/posts/${postID}`);
+      if (payload.status === 200) {
+        swal("Success!", "Deleted!", "success");
+        dispatch(actionCreator(types.ON_POST_DELETED));
+      } else {
+        swal("Ops!", "Error to delete this post, try again later...", "error");
+      }
+    } catch (error) {
+      swal("Ops!", "Sorry, try again later.", "error");
+    }
+  }
+}

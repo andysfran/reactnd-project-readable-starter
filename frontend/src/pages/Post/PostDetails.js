@@ -3,9 +3,9 @@ import swal from 'sweetalert2';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getSinglePost, resetPost, postVote, editPost } from './actions';
+import { getSinglePost, resetPost, postVote, editPost, deletePost } from './actions';
 import { openModal } from '../../components/EditModal/actions';
-import { getData, isRequesting } from './selector';
+import { getData, isRequesting, getPostStatus } from './selector';
 
 import { withStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +19,10 @@ class PostDetails extends PureComponent {
   state = {}
 
   static getDerivedStateFromProps(props) {
+    if (props.deleted) {
+      props.history.replace('/');
+    }
+    
     if ("deleted" in props.data && props.data.deleted) {
       props.history.replace('/');
     }
@@ -32,6 +36,10 @@ class PostDetails extends PureComponent {
     } else {
       this.props.history.replace('/');
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetPost();
   }
 
   openEditModal = () => {
@@ -48,6 +56,11 @@ class PostDetails extends PureComponent {
     }
   }
 
+  deletePost = () => {
+    const { match: { params }, deletePost } = this.props;
+    deletePost(params.post_id);
+  }
+
   renderContent = () => {
     const { requesting, data, postVote } = this.props;
     if (!requesting) {
@@ -58,8 +71,10 @@ class PostDetails extends PureComponent {
             <Post
               onClickVote={(option) => postVote(match.params.post_id, option)}
               onClickEdit={this.openEditModal}
+              onClickDelete={this.deletePost}
               showBody
               showEditButton
+              showDeleteButton
               showCommentsButton={false}
               {...data}
             />
@@ -93,12 +108,14 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   resetPost,
   postVote,
   openModal,
-  editPost
+  editPost,
+  deletePost
 }, dispatch);
 
 const mapStateToProps = (state) => ({
   requesting: isRequesting(state),
-  data: getData(state)
+  data: getData(state),
+  deleted: getPostStatus(state)
 });
 
 const styles = () => ({

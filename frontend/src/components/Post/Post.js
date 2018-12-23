@@ -24,10 +24,12 @@ class Post extends PureComponent {
     voteScore: 0,
     showCommentsButton: true,
     showEditButton: false,
+    showDeleteButton: false,
     onClickPost: () => {},
     onClickComment: () => {},
     onClickVote: () => {},
-    onClickEdit: () => {}
+    onClickEdit: () => {},
+    onClickDelete: () => {}
   }
 
   clickPost = (e) => {
@@ -38,7 +40,18 @@ class Post extends PureComponent {
   }
 
   render() {
-    const { classes, title, author, commentCount, voteScore, showBody, body, showCommentsButton, showEditButton } = this.props;
+    const {
+      classes,
+      title,
+      author,
+      commentCount,
+      voteScore,
+      showBody,
+      body,
+      showCommentsButton,
+      showEditButton,
+      showDeleteButton
+    } = this.props;
     return (
       <Paper onClick={this.clickPost} className={classes.paper}>
         <Typography className={classes.textWrapper} variant="h5" component="h5">
@@ -65,6 +78,16 @@ class Post extends PureComponent {
                 </IconButton>
               </Tooltip>
               { commentCount > 0? commentCount : null}
+            </Grid>
+          }
+
+          {showDeleteButton && 
+            <Grid item>
+              <Tooltip title="Delete post" aria-label="delete-post">
+                <IconButton onClick={this.props.onClickDelete}>
+                  <SvgIcon fontSize="small"><Delete /></SvgIcon>
+                </IconButton>
+              </Tooltip>
             </Grid>
           }
 

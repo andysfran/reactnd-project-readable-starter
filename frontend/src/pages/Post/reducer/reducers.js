@@ -17,3 +17,8 @@ export const onGetPostError = (state) => ({
   isRequesting: false,
   error: true
 });
+
+export const onDeletePost = (state) => ({
+  ...state,
+  deleted: true
+});

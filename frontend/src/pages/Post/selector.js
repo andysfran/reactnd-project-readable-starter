@@ -13,3 +13,5 @@ export const getData = (state) => {
   }
   return {};
 }
+
+export const getPostStatus = (state) => state.singlePost.deleted;
