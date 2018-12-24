@@ -32,7 +32,7 @@ class EditModal extends PureComponent {
   }
 
   render() {
-    const { closeModal, open, onConfirm } = this.props;
+    const { open, onConfirm } = this.props;
     return (
       <Dialog
         open={open}
