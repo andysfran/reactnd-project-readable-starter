@@ -6,3 +6,4 @@ export const isRequesting = (state) => {
   return true;
 }
 export const getData = (state) => state.postList.data;
+export const getActualOrder = (state) => state.postList.order;

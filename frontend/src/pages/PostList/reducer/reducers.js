@@ -18,3 +18,8 @@ export const onGetPostsFailed = (state) => ({
   isRequesting: false,
   error: true
 });
+
+export const onChangeOrder = (state, payload) => ({
+  ...state,
+  order: payload
+});

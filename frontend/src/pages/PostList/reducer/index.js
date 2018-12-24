@@ -2,14 +2,16 @@ import * as types from '../actions/types';
 import {
   onGetPosts,
   onGetPostsFailed,
-  onGetPostsSuccess
+  onGetPostsSuccess,
+  onChangeOrder
 } from './reducers';
 
 const initialState = {
   isRequesting: false,
   data: [],
   error: undefined,
-  categorySelected: ''
+  categorySelected: '',
+  order: undefined
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -20,6 +22,8 @@ export default (state = initialState, { type, payload }) => {
       return onGetPostsSuccess(state, payload);
     case types.GET_POSTS_FAILED:
       return onGetPostsFailed(state);
+    case types.CHANGE_ORDER:
+      return onChangeOrder(state, payload);
     default:
       return state;
   }

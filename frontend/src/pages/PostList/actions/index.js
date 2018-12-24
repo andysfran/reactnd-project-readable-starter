@@ -3,6 +3,8 @@ import * as types from './types';
 import { actionCreator } from '../../../utils/reduxUtils';
 import axios from '../../../services/AxiosInstance';
 
+export const changeOrder = (order) => actionCreator(types.CHANGE_ORDER, order);
+
 export const getPosts = (category = '') => {
   return async (dispatch) => {
     dispatch(actionCreator(types.GET_POSTS_REQUEST));

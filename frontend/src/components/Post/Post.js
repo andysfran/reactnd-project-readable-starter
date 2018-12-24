@@ -39,6 +39,17 @@ class Post extends PureComponent {
     }
   }
 
+  renderDate = () => {
+    const { timestamp } = this.props;
+    if (timestamp !== undefined && timestamp !== null) {
+      const day = new Date(timestamp).getDate();
+      const month = new Date(timestamp).getMonth();
+      const year = new Date(timestamp).getFullYear();
+      return `At: ${month}-${day}-${year}`;
+    }
+    return "";
+  }
+
   render() {
     const {
       classes,
@@ -58,7 +69,7 @@ class Post extends PureComponent {
           { title }
         </Typography>
         <Typography className={classes.subtitle} variant="caption" component="p" paragraph={true}>
-          Posted by: { author }
+          Posted by: { author } - {this.renderDate()}
         </Typography>
         
         <Grid item>
