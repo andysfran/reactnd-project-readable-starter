@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import swal from 'sweetalert2';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { getSinglePost, resetPost, postVote, editPost, deletePost } from './actions';
 import { openModal } from '../../components/EditModal/actions';
@@ -16,15 +17,19 @@ import EditModal from '../../components/EditModal/EditModal';
 
 class PostDetails extends PureComponent {
 
-  state = {}
+  state = {
+    postDeleted: false
+  }
 
   static getDerivedStateFromProps(props) {
     if (props.deleted) {
       props.history.replace('/');
     }
     
-    if ("deleted" in props.data && props.data.deleted) {
-      props.history.replace('/');
+    if (("deleted" in props.data && props.data.deleted) || Object.keys(props.data).length === 0) {
+      return {
+        postDeleted: true
+      }
     }
     return null;
   }
@@ -64,28 +69,37 @@ class PostDetails extends PureComponent {
   renderContent = () => {
     const { requesting, data, postVote } = this.props;
     if (!requesting) {
-      const { match } = this.props;
+      const { match, classes } = this.props;
+      const { postDeleted } = this.state;
+
       return (
-        <Fragment>
-          <Grid item xs={12} md={12} lg={12} xl={12}>
-            <Post
-              onClickVote={(option) => postVote(match.params.post_id, option)}
-              onClickEdit={this.openEditModal}
-              onClickDelete={this.deletePost}
-              showBody
-              showEditButton
-              showDeleteButton
-              showCommentsButton={false}
-              rightText={`${data.commentCount} comments`}
-              {...data}
-            />
-          </Grid>
-          <Grid item xs={12} md={12} lg={12} xl={12}>
-            <Typography variant="title" align="center">Comments</Typography>
-          </Grid>
-          <CommentList post={match.params.post_id} />
-          <EditModal onConfirm={this.confirmEditPost} />
-        </Fragment>
+        <Grid item xs={12} md={12} lg={12} xl={12}>
+          {(postDeleted)?
+            <Grid className={classes.containerDeleted}>
+              <Typography variant="h3" align="center" paragraph={true}>404 post not found</Typography>
+              <Typography variant="h5" align="center" paragraph={true}>Go to <Link to="/">Home Screen</Link></Typography>
+            </Grid>
+            :
+            <Fragment>
+              <Post
+                onClickVote={(option) => postVote(match.params.post_id, option)}
+                onClickEdit={this.openEditModal}
+                onClickDelete={this.deletePost}
+                showBody
+                showEditButton
+                showDeleteButton
+                showCommentsButton={false}
+                rightText={`${data.commentCount} comments`}
+                {...data}
+              />
+              <Grid item xs={12} md={12} lg={12} xl={12}>
+                <Typography variant="title" align="center">Comments</Typography>
+              </Grid>
+              <CommentList post={match.params.post_id} />
+              <EditModal onConfirm={this.confirmEditPost} />
+            </Fragment>
+          }
+        </Grid>
       );
     }
     return null;
@@ -119,9 +133,12 @@ const mapStateToProps = (state) => ({
   deleted: getPostStatus(state)
 });
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     margin: 0
+  },
+  containerDeleted: {
+    marginTop: theme.spacing.unit * 3
   }
 });
 
