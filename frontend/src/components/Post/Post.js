@@ -25,6 +25,7 @@ class Post extends PureComponent {
     showCommentsButton: true,
     showEditButton: false,
     showDeleteButton: false,
+    rightText: undefined,
     onClickPost: () => {},
     onClickComment: () => {},
     onClickVote: () => {},
@@ -59,6 +60,7 @@ class Post extends PureComponent {
       voteScore,
       showBody,
       body,
+      rightText,
       showCommentsButton,
       showEditButton,
       showDeleteButton
@@ -125,6 +127,11 @@ class Post extends PureComponent {
               </IconButton>
             </Tooltip>
           </Grid>
+          {(rightText !== undefined && typeof rightText === "string") &&
+          <Grid item className={classes.containerRightText}>
+            <Typography variant="overline">{rightText}</Typography>
+          </Grid>
+          }
         </Grid>
       </Paper>
     );
@@ -150,6 +157,10 @@ const styles = theme => ({
   bodyText: {
     paddingRight: 20,
     paddingLeft: 20
+  },
+  containerRightText: {
+    alignItems: "center",
+    display: "flex"
   }
 });
 

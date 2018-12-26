@@ -76,6 +76,7 @@ class PostDetails extends PureComponent {
               showEditButton
               showDeleteButton
               showCommentsButton={false}
+              rightText={`${data.commentCount} comments`}
               {...data}
             />
           </Grid>
