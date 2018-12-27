@@ -17,19 +17,11 @@ import EditModal from '../../components/EditModal/EditModal';
 
 class PostDetails extends PureComponent {
 
-  state = {
-    postDeleted: false
-  }
+  state = {}
 
   static getDerivedStateFromProps(props) {
     if (props.deleted) {
       props.history.replace('/');
-    }
-    
-    if (("deleted" in props.data && props.data.deleted) || Object.keys(props.data).length === 0) {
-      return {
-        postDeleted: true
-      }
     }
     return null;
   }
@@ -70,11 +62,9 @@ class PostDetails extends PureComponent {
     const { requesting, data, postVote } = this.props;
     if (!requesting) {
       const { match, classes } = this.props;
-      const { postDeleted } = this.state;
-
       return (
         <Grid item xs={12} md={12} lg={12} xl={12}>
-          {(postDeleted)?
+          {(Object.keys(data).length === 0)?
             <Grid className={classes.containerDeleted}>
               <Typography variant="h3" align="center" paragraph={true}>404 post not found</Typography>
               <Typography variant="h5" align="center" paragraph={true}>Go to <Link to="/">Home Screen</Link></Typography>
